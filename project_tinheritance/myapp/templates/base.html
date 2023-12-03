@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %} Base {% endblock %}</title>
+    <style>
+        .header{
+            border: 2px solid red;
+            height: 100px;
+            background-color: aquamarine;
+        }
+
+        ul{
+            list-style-type: none;
+        }
+
+        li{
+            display: inline-block;
+            margin-left: 100px;
+        }
+    </style>
+
+</head>
+<body>
+    {% include 'header.html' %}
+    
+    {% block content %}
+
+        <h1>Base Page</h1>
+
+    {% endblock %}
+    
+</body>
+</html>

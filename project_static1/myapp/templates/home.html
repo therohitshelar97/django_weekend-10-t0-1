@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-2 border-end border-dark ">
+            <h1>Menu Bar</h1>
+        </div>
+        <div class="col-8 border-end border-dark ">
+            <div class="row">
+                <div class="col-4 ">
+                    <h4>Home</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque modi quidem illum, ullam consequatur deserunt unde velit, nesciunt, vel vitae alias! Ullam architecto harum neque magni. Minus dolor corporis aperiam?
+                    </p>
+                </div>
+                <div class="col-4">
+                    <h4>About</h4>
+                    <p>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt alias laborum, quidem dolorem eius, earum, illo doloremque sapiente ullam necessitatibus eaque perspiciatis eveniet inventore? Ipsam repudiandae quam nostrum ut doloribus?
+                    </p>
+                </div>
+                <div class="col-4">
+                    <h4>Image</h4>
+                    <img src="{% static 'images/img1 (5).jpg' %}" width="100%" />
+                </div>
+            </div>
+        </div>
+        <div class="col-2 ">
+            <h1>advertisement</h1>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
