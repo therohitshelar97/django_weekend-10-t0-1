@@ -21,5 +21,7 @@ from myapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.IndexClass.as_view()),
-    path('data/',views.DataFetch.as_view())
+    path('data/',views.DataFetch.as_view()),
+    path('delete/<int:id>',views.DataDelete.as_view(),name='delete'),
+    path('update/<int:id>',views.DataUpdate.as_view(),name='update')
 ]

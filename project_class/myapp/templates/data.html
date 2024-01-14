@@ -6,8 +6,18 @@
     <title>Document</title>
 </head>
 <body>
+    {% if messages %}
+    {% for i in messages %}
+        <h1 style="color:red">{{i}}</h1>
+    {% endfor %}
+    {% endif %}
     {% for i in data %}
-         <h1>{{i.name}}</h1>
+         <h1>{{i.name}}   <span><a href="{% url 'delete' i.id %}">Delete Using Get</a></span> <span><a href="{% url 'update' i.id %}">Update Using Get</a></span></h1>
+         <form action="{% url 'delete' i.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete Using Post" />
+
+         </form>
     {% endfor %}
 </body>
 </html>
