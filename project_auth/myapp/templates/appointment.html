@@ -4,9 +4,45 @@
 
 {% block content %}
 
-<a href="{% url 'logout' %}">LogOut</a>
+<div class="container mt-5">
+    {% if messages %}
+        {% for mess in messages %}
+            <h1 class="alert">{{mess}}</h1>
+        {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-6">
+            
+            <form action="" method="post">
+                {% csrf_token %}
+                Name : <input type="text" name="name" class="form-control" />
+                contact : <input type="number" name="cnumber" class="form-control" />
+                For_What : <input type="text" name="what" class="form-control" />
+                <input type="submit" value="Submit" class="btn btn-success" />
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <table class="table table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>A Booking For</th>
+                    <th>Contact</th>
+                    <th>Date</th>
+                </tr>
+                {% for i in data %}
+                <tr>
+                    <td>{{i.name}}</td>
+                    <td>{{i.reason}}</td>
+                    <td>{{i.contact}}</td>
+                    <td>{{i.date}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
 
-<h1>Appointment Page</h1>
+
 
 {% endblock %}
 

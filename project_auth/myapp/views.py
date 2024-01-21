@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
+from .models import Appointment
+from django.contrib import messages
 
 # Create your views here.
 def Index(request):
@@ -29,9 +31,16 @@ def Login(request):
                 return HttpResponseRedirect('/signup/')
         return render(request,'login.html')
 
-def Appointment(request):
+def Appointment1(request):
     if request.user.is_authenticated:
-        return render(request,'appointment.html')
+        if request.method == "POST":
+            name = request.POST.get("name")
+            contact = request.POST.get('cnumber')
+            what = request.POST.get('what')
+            Appointment.objects.create(name=name,contact=contact,reason=what,user=request.user)
+            messages.success(request,"We Got Data Will Confirm You Appointment Time...")
+        data = Appointment.objects.filter(user_id=request.user)
+        return render(request,'appointment.html',{'data':data})
     else:
         return HttpResponseRedirect('/login/')
     

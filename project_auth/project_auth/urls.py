@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/',views.Index,name='index'),
     path('signup/',views.SignUp,name='signup'),
-    path('appoint/',views.Appointment,name='appoint'),
+    path('appoint/',views.Appointment1,name='appoint'),
     path('login/',views.Login,name='login'),
     path('logout/',views.LogOut,name='logout')
 ]
