@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
-from .models import Appointment
+from .models import Appointment, Slots, AppointmentHistory
 from django.contrib import messages
 
 # Create your views here.
@@ -33,19 +33,50 @@ def Login(request):
 
 def Appointment1(request):
     if request.user.is_authenticated:
+        slots = Slots.objects.all().values_list('slot',flat=True)
+        aslots = Appointment.objects.all().values_list('slot',flat=True)
+        slots =list(slots)
+        aslots = list(aslots)
         if request.method == "POST":
+
             name = request.POST.get("name")
             contact = request.POST.get('cnumber')
             what = request.POST.get('what')
-            Appointment.objects.create(name=name,contact=contact,reason=what,user=request.user)
-            messages.success(request,"We Got Data Will Confirm You Appointment Time...")
+            slot = request.POST.get('slot')
+            if len(aslots)<4:
+                Appointment.objects.create(name=name,contact=contact,reason=what,user=request.user,slot=slot)
+                messages.success(request,"We Got Data Will Confirm You Appointment Time...")
         data = Appointment.objects.filter(user_id=request.user)
-        return render(request,'appointment.html',{'data':data})
+        msg = len(aslots)
+       
+        return render(request,'appointment.html',{'msg':msg,'data':data,'slots':slots,'aslots':aslots})
     else:
         return HttpResponseRedirect('/login/')
     
 def LogOut(request):
     logout(request)
     return HttpResponseRedirect('/login/')
+
+
+def Doctor(request):
+    data = Appointment.objects.all()
+    return render(request,'doctor.html',{'data':data})
+
+def Notes(request,id):
+    da = Appointment.objects.get(pk=id)
+    print(da.user_id)
+    if request.method == "POST":
+        notes = request.POST.get('note')
+        name = da.name
+        contact = da.contact
+        date = da.date
+        time = da.time
+        reason = da.reason
+        slot = da.slot
+        user = da.user_id
+        AppointmentHistory.objects.create(doct_notes=notes,name=name,contact=contact,date=date,time=time,reason=reason,slot=slot,user=user)
+        Appointment.objects.get(pk=id).delete()
+        return HttpResponseRedirect('/doctor/')
+    return render(request,'notes.html',{'da':da})
 
 

@@ -24,5 +24,7 @@ urlpatterns = [
     path('signup/',views.SignUp,name='signup'),
     path('appoint/',views.Appointment1,name='appoint'),
     path('login/',views.Login,name='login'),
-    path('logout/',views.LogOut,name='logout')
+    path('logout/',views.LogOut,name='logout'),
+    path('doctor/',views.Doctor,name='doctor'),
+    path('notes/<int:id>',views.Notes,name='notes')
 ]

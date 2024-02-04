@@ -4,6 +4,10 @@
 
 {% block content %}
 
+{% if msg == 4 %}
+    <h1> all slots are reserve</h1>
+{% endif %}
+
 <div class="container mt-5">
     {% if messages %}
         {% for mess in messages %}
@@ -18,6 +22,15 @@
                 Name : <input type="text" name="name" class="form-control" />
                 contact : <input type="number" name="cnumber" class="form-control" />
                 For_What : <input type="text" name="what" class="form-control" />
+                slot : <select name='slot' class='form-select'>
+                    {% for i in slots %}
+                        {% if i not in aslots %}
+                          <option>{{i}}</option>
+                        {% endif %}
+                    {% endfor %}
+                     
+                        
+                        </select>
                 <input type="submit" value="Submit" class="btn btn-success" />
             </form>
         </div>
@@ -28,6 +41,7 @@
                     <th>A Booking For</th>
                     <th>Contact</th>
                     <th>Date</th>
+                    <th>Appointment Slot</th>
                 </tr>
                 {% for i in data %}
                 <tr>
@@ -35,6 +49,7 @@
                     <td>{{i.reason}}</td>
                     <td>{{i.contact}}</td>
                     <td>{{i.date}}</td>
+                    <td>{{i.slot}}</td>
                 </tr>
                 {% endfor %}
             </table>
