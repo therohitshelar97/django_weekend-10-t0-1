@@ -6,7 +6,9 @@ from django.contrib import messages
 
 # Create your views here.
 def Index(request):
-    return render(request,'index.html')
+    username = request.user
+    print(username)
+    return render(request,'index.html',{'username':username})
 
 def SignUp(request):
     if request.method == "POST":
@@ -48,8 +50,10 @@ def Appointment1(request):
                 messages.success(request,"We Got Data Will Confirm You Appointment Time...")
         data = Appointment.objects.filter(user_id=request.user)
         msg = len(aslots)
-       
-        return render(request,'appointment.html',{'msg':msg,'data':data,'slots':slots,'aslots':aslots})
+        username = request.user
+
+        history = AppointmentHistory.objects.filter(user=request.user.id)
+        return render(request,'appointment.html',{'msg':msg,'data':data,'slots':slots,'aslots':aslots,'username':username,'history':history})
     else:
         return HttpResponseRedirect('/login/')
     
@@ -60,6 +64,7 @@ def LogOut(request):
 
 def Doctor(request):
     data = Appointment.objects.all()
+    username = request.user
     return render(request,'doctor.html',{'data':data})
 
 def Notes(request,id):

@@ -55,9 +55,49 @@
             </table>
         </div>
     </div>
+   
 </div>
 
+<div class="container ah" onmouseout="hide()" onmouseover="show()">
+    <div class="alert alert-danger text-center">
+        <h3>Previous Appointments</h3>
+    </div>
 
+    <table class="table table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Slot</th>
+            <th>Doctor Note</th>
+        </tr>
+        {% for i in history %}
+        <tr>
+            <td>{{i.name}}</td>
+            <td>{{i.contact}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.time}}</td>
+            <td>{{i.reason}}</td>
+            <td>{{i.slot}}</td>
+            <td>{{i.doct_notes}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+<script>
+    function show(){
+        var ds = document.getElementsByClassName('ah')[0]
+        ds.style.display = 'block'
+    }
+    function hide(){
+        var ds = document.getElementsByClassName('ah')[0]
+        ds.style.display = 'none'
+    }
+</script>
 
 {% endblock %}
 
