@@ -47,7 +47,7 @@ def Appointment1(request):
             slot = request.POST.get('slot')
             if len(aslots)<4:
                 Appointment.objects.create(name=name,contact=contact,reason=what,user=request.user,slot=slot)
-                messages.success(request,"We Got Data Will Confirm You Appointment Time...")
+                messages.success(request,"Your Appointment Confirm See You Soon In...")
         data = Appointment.objects.filter(user_id=request.user)
         msg = len(aslots)
         username = request.user
@@ -64,8 +64,11 @@ def LogOut(request):
 
 def Doctor(request):
     data = Appointment.objects.all()
+    datac = AppointmentHistory.objects.all().count()
+    print(datac)
+    history = AppointmentHistory.objects.all()
     username = request.user
-    return render(request,'doctor.html',{'data':data})
+    return render(request,'doctor.html',{'data':data,'history':history})
 
 def Notes(request,id):
     da = Appointment.objects.get(pk=id)
@@ -83,5 +86,37 @@ def Notes(request,id):
         Appointment.objects.get(pk=id).delete()
         return HttpResponseRedirect('/doctor/')
     return render(request,'notes.html',{'da':da})
+
+def Cancel(request,id):
+    da = Appointment.objects.get(pk=id)
+    name = da.name
+    contact = da.contact
+    date = da.date
+    time = da.time
+    reason = da.reason
+    slot = da.slot
+    user = da.user_id
+    notes = 'Your Appointment Cancel By You'
+    AppointmentHistory.objects.create(doct_notes=notes,name=name,contact=contact,date=date,time=time,reason=reason,slot=slot,user=user)
+    messages.success(request,'Your Appointmet Has Been Cancel By You...')
+    Appointment.objects.get(pk=id).delete()
+    return HttpResponseRedirect('/appoint/')
+
+
+def CancelDoct(request,id):
+    da = Appointment.objects.get(pk=id)
+    name = da.name
+    contact = da.contact
+    date = da.date
+    time = da.time
+    reason = da.reason
+    slot = da.slot
+    user = da.user_id
+    notes = 'Your Appointment Cancel By Doctor'
+    AppointmentHistory.objects.create(doct_notes=notes,name=name,contact=contact,date=date,time=time,reason=reason,slot=slot,user=user)
+    messages.success(request,'Your Appointmet Has Been Cancel By You...')
+    Appointment.objects.get(pk=id).delete()
+    return HttpResponseRedirect('/doctor/')
+
 
 

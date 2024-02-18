@@ -27,7 +27,8 @@
                     <td>{{i.reason}}</td>
                     <td>{{i.slot}}</td>
                     <td>
-                        <a href="{% url 'notes' i.id %}" class="btn btn-danger">Pending</a>
+                        <a href="{% url 'notes' i.id %}" class="btn btn-warning">Pending</a>
+                        <a href="{% url 'canceldoct' i.id %}"><button class="btn btn-danger">Cancel</button></a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -35,5 +36,51 @@
         </div>
     </div>
 </div>
+
+<div class="container ah" onmouseout="hide()" onmouseover="show()">
+    {% if history %}
+    <div class="alert alert-danger text-center">
+        <h3>Previous Appointments</h3>
+    </div>
+   
+    <table class="table table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Slot</th>
+            <th>Doctor Note</th>
+        </tr>
+        {% for i in history %}
+        <tr>
+            <td>{{i.name}}</td>
+            <td>{{i.contact}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.time}}</td>
+            <td>{{i.reason}}</td>
+            <td>{{i.slot}}</td>
+            <td>{{i.doct_notes}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+       <div class="alert alert-dark text-center text-light">
+        <h1>You Haven't Book Any Appointment Yet</h1>
+       </div>
+    {% endif %}
+</div>
+
+<script>
+    function show(){
+        var ds = document.getElementsByClassName('ah')[0]
+        ds.style.display = 'block'
+    }
+    function hide(){
+        var ds = document.getElementsByClassName('ah')[0]
+        ds.style.display = 'none'
+    }
+</script>
 
 {% endblock %}

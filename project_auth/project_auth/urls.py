@@ -26,5 +26,7 @@ urlpatterns = [
     path('login/',views.Login,name='login'),
     path('logout/',views.LogOut,name='logout'),
     path('doctor/',views.Doctor,name='doctor'),
-    path('notes/<int:id>',views.Notes,name='notes')
+    path('notes/<int:id>',views.Notes,name='notes'),
+    path('cancel/<int:id>',views.Cancel,name='cancel'),
+    path('canceldoct/<int:id>',views.CancelDoct,name='canceldoct')
 ]
